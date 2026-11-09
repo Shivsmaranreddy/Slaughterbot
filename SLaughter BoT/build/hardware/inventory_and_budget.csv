@@ -1,0 +1,8 @@
+item,quantity,status,cost_inr,notes
+Existing Arduino,1,confirm available,,User indicated existing board
+Desktop computer,1,existing,,No local training required
+Low-force servo,1,obtain quote,,Confirm torque and current
+Regulated servo power supply,1,obtain quote,,Match servo requirements
+Physical emergency stop and fuse,1,obtain quote,,Independent actuator power interruption
+Wires and enclosure,1 set,obtain quote,,Use school lab stock if available
+Inert demonstration objects,1 set,obtain quote,,Foam or lightweight plastic

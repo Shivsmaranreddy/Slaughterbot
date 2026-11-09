@@ -1,0 +1,44 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Your demonstration order | SLAUGHTER BOT</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#142d35;background:#f2f6f5;font-size:16px}
+body{margin:0}header{padding:32px max(5vw,20px);background:#123f45;color:white}
+header small{letter-spacing:.15em;color:#aee5d9}h1{font-size:clamp(28px,4vw,44px);margin:12px 0}
+nav{display:flex;gap:22px;flex-wrap:wrap;margin-top:18px}nav a{color:inherit}
+main{max-width:1200px;margin:auto;padding:28px 20px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px}
+section{padding:24px;border:1px solid #cbdcda;background:white;border-radius:12px;margin-bottom:22px}
+h2{margin-top:0;font-size:23px}label{display:block;margin:15px 0 5px}input,select,textarea,button{font:inherit;box-sizing:border-box}
+input,select,textarea{width:100%;padding:10px;border:1px solid #92ada9;border-radius:5px}
+button{background:#13695c;color:white;border:0;border-radius:5px;padding:11px 17px;cursor:pointer;margin-top:14px}
+button:hover{background:#0c4e44}button.danger{background:#a42e2e}button:focus-visible,a:focus-visible{outline:3px solid #d6a400;outline-offset:3px}
+.notice{border-left:5px solid #cf971c;background:#fff6dc;padding:15px;margin:0 0 22px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f2f6f5;padding:14px;font-size:14px;max-height:440px;overflow:auto}
+.status{min-height:1.4em;font-weight:600}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px;border-bottom:1px solid #dde6e4}
+.scroll{overflow:auto}.muted{color:#526d72}footer{padding:24px;text-align:center;color:#526d72}
+</style></head><body><header><small>SLAUGHTER BOT / EXHIBITION LAB</small><h1>Your demonstration order</h1><nav><a href="/customer">Customer</a><a href="/manager">MSME manager</a><a href="/enterprise">Enterprise roadmap</a></nav></header><main><p class="notice">Demonstration records only. Experimental AI cannot certify food safety. Hardware controls operate an in-memory mock.</p>
+<div class="grid"><section><h2>Request a service</h2><p>Choose an inert-object exhibition activity. No real processing service is sold here.</p>
+<form id="order"><label for="service">Activity</label><select id="service"><option>demonstration sorting</option><option>demonstration positioning</option></select>
+<label for="quantity">Number of demonstration objects</label><input id="quantity" type="number" min="1" max="10000" value="1" required>
+<label for="note">Customization notes (no personal data)</label><textarea id="note" maxlength="500"></textarea><button>Create demo order</button></form>
+<pre id="created" aria-live="polite">No order created yet.</pre></section>
+<section><h2>Track and give feedback</h2><p>Keep the returned tracking token private. Anyone with it can access this demonstration order.</p>
+<form id="track"><label for="tracking">Tracking token</label><input id="tracking" required autocomplete="off"><button>Check status</button></form>
+<pre id="tracked" aria-live="polite">Enter a token to see the latest workflow status.</pre>
+<label for="rating">Satisfaction rating</label><select id="rating"><option value="5">5 – Very satisfied</option><option value="4">4 – Satisfied</option><option value="3">3 – Neutral</option><option value="2">2 – Dissatisfied</option><option value="1">1 – Very dissatisfied</option></select>
+<button id="feedback">Save feedback</button><p id="feedbackStatus" class="status" aria-live="polite"></p></section></div>
+<section><h2>Experimental model availability</h2><p>Missing models produce an abstention. Availability does not establish model accuracy.</p><pre id="models"></pre></section>
+</main><footer>CBSE Science Exhibition 2026–27 · Human review required</footer><script>
+const $=id=>document.getElementById(id);
+async function api(path,method='GET',body,token=''){
+ const headers={}; if(body!==undefined)headers['Content-Type']='application/json';
+ if(token)headers.Authorization='Bearer '+token;
+ const r=await fetch('/api'+path,{method,headers,body:body===undefined?undefined:JSON.stringify(body)});
+ const data=await r.json();if(!r.ok)throw new Error(typeof data.detail==='string'?data.detail:JSON.stringify(data.detail));return data;
+}
+function show(id,data){$(id).textContent=typeof data==='string'?data:JSON.stringify(data,null,2)}
+async function run(id,fn){try{show(id,'Working…');const result=await fn();show(id,result)}catch(e){show(id,e.message)}}
+
+$('order').onsubmit=e=>{e.preventDefault();run('created',async()=>{const r=await api('/orders','POST',{service:$('service').value,quantity:Number($('quantity').value),note:$('note').value});$('tracking').value=r.tracking_token;return r})};
+$('track').onsubmit=e=>{e.preventDefault();run('tracked',()=>api('/orders/'+encodeURIComponent($('tracking').value.trim())))};
+$('feedback').onclick=()=>run('feedbackStatus',()=>api('/orders/'+encodeURIComponent($('tracking').value.trim())+'/feedback','POST',{rating:Number($('rating').value)}));
+run('models',()=>api('/models'));
+</script></body></html>

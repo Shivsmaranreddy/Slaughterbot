@@ -1,0 +1,9 @@
+{
+  "id": "model_3_environment_rl",
+  "version": "0.1.0",
+  "status": "NOT_TRAINED",
+  "artifact": null,
+  "provenance": "none",
+  "training": null,
+  "evaluation": null
+}

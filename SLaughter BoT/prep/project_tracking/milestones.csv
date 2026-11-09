@@ -1,0 +1,7 @@
+milestone,status,evidence
+Source delivery,PREPARED,README.md
+Runtime tests,NOT RUN,
+Model training,NOT RUN,
+Integrated trained inference,NOT RUN,
+Physical demonstration,NOT RUN,
+Exhibition rehearsal,NOT RUN,

@@ -1,0 +1,8 @@
+{
+  "seed": 42,
+  "epochs": 10,
+  "batch_size": 16,
+  "learning_rate": 0.001,
+  "rl_timesteps": 20000,
+  "device": "auto"
+}

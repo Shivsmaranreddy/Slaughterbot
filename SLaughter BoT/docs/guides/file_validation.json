@@ -1,0 +1,24 @@
+{
+  "checks": "STATIC FILE CHECKS ONLY",
+  "counts": {
+    "python_files": 32,
+    "notebooks": 5,
+    "notebook_cells": 25,
+    "configuration_files": 11,
+    "html_files": 4
+  },
+  "syntax_errors": [],
+  "runtime_tests": "NOT RUN",
+  "browser_tests": "NOT RUN",
+  "training": "NOT RUN",
+  "firmware_compile": "NOT RUN",
+  "dependencies_installed": false,
+  "presentations": {
+    "decks": 8,
+    "slides": 24,
+    "package_checks": "PASSED",
+    "layout_checks": "PASSED",
+    "visual_review": "COMPLETED",
+    "PowerPoint_app_test": "NOT RUN"
+  }
+}

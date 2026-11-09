@@ -1,0 +1,56 @@
+{
+  "models": [
+    {
+      "id": "model_1_visual_cnn",
+      "version": "0.1.0",
+      "type": "visual",
+      "status": "NOT_TRAINED",
+      "artifact_dir": "output/models/model_1_visual_cnn",
+      "input_schema": "image_path",
+      "output_schema": "visual_assessment",
+      "provenance": "none",
+      "preprocessing": {},
+      "training": null,
+      "evaluation": null
+    },
+    {
+      "id": "model_2_ultrasound_3d",
+      "version": "0.1.0",
+      "type": "ultrasound",
+      "status": "NOT_TRAINED",
+      "artifact_dir": "output/models/model_2_ultrasound_3d",
+      "input_schema": "volume_path",
+      "output_schema": "reconstruction",
+      "provenance": "none",
+      "preprocessing": {},
+      "training": null,
+      "evaluation": null
+    },
+    {
+      "id": "model_3_environment_rl",
+      "version": "0.1.0",
+      "type": "scenario_rl",
+      "status": "NOT_TRAINED",
+      "artifact_dir": "output/models/model_3_environment_rl",
+      "input_schema": "scenario_state",
+      "output_schema": "scenario_action",
+      "provenance": "none",
+      "preprocessing": {},
+      "training": null,
+      "evaluation": null
+    },
+    {
+      "id": "model_4_robotic_rl",
+      "version": "0.1.0",
+      "type": "robot_rl",
+      "status": "NOT_TRAINED",
+      "artifact_dir": "output/models/model_4_robotic_rl",
+      "input_schema": "robot_observation",
+      "output_schema": "task_action",
+      "provenance": "none",
+      "preprocessing": {},
+      "training": null,
+      "evaluation": null
+    }
+  ]
+}

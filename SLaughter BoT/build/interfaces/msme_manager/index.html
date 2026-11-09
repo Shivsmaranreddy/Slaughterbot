@@ -1,0 +1,48 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MSME operations | SLAUGHTER BOT</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#142d35;background:#f2f6f5;font-size:16px}
+body{margin:0}header{padding:32px max(5vw,20px);background:#123f45;color:white}
+header small{letter-spacing:.15em;color:#aee5d9}h1{font-size:clamp(28px,4vw,44px);margin:12px 0}
+nav{display:flex;gap:22px;flex-wrap:wrap;margin-top:18px}nav a{color:inherit}
+main{max-width:1200px;margin:auto;padding:28px 20px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px}
+section{padding:24px;border:1px solid #cbdcda;background:white;border-radius:12px;margin-bottom:22px}
+h2{margin-top:0;font-size:23px}label{display:block;margin:15px 0 5px}input,select,textarea,button{font:inherit;box-sizing:border-box}
+input,select,textarea{width:100%;padding:10px;border:1px solid #92ada9;border-radius:5px}
+button{background:#13695c;color:white;border:0;border-radius:5px;padding:11px 17px;cursor:pointer;margin-top:14px}
+button:hover{background:#0c4e44}button.danger{background:#a42e2e}button:focus-visible,a:focus-visible{outline:3px solid #d6a400;outline-offset:3px}
+.notice{border-left:5px solid #cf971c;background:#fff6dc;padding:15px;margin:0 0 22px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f2f6f5;padding:14px;font-size:14px;max-height:440px;overflow:auto}
+.status{min-height:1.4em;font-weight:600}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px;border-bottom:1px solid #dde6e4}
+.scroll{overflow:auto}.muted{color:#526d72}footer{padding:24px;text-align:center;color:#526d72}
+</style></head><body><header><small>SLAUGHTER BOT / EXHIBITION LAB</small><h1>MSME operations</h1><nav><a href="/customer">Customer</a><a href="/manager">MSME manager</a><a href="/enterprise">Enterprise roadmap</a></nav></header><main><p class="notice">Demonstration records only. Experimental AI cannot certify food safety. Hardware controls operate an in-memory mock.</p>
+<section><h2>Manager access</h2><label for="token">Local manager token</label><input id="token" type="password" autocomplete="off" placeholder="Value you set in SB_MANAGER_TOKEN"><button id="refresh">Load operations</button><button id="report">Download JSON report</button><p id="notice" class="status" aria-live="polite"></p></section>
+<div class="grid"><section><h2>Inventory and mass balance</h2><form id="batchForm"><label for="batchId">Batch ID to update (blank creates new)</label><input id="batchId" type="number" min="1"><label for="batchName">Batch name</label><input id="batchName" required maxlength="80"><label for="inputMass">Input mass, kg</label><input id="inputMass" type="number" min="0.001" step="0.001" required><label for="outputMass">Output mass, kg</label><input id="outputMass" type="number" min="0" step="0.001" value="0"><label for="wasteMass">Waste mass, kg</label><input id="wasteMass" type="number" min="0" step="0.001" value="0"><label for="batchStatus">Workflow</label><select id="batchStatus"><option>received</option><option>in_progress</option><option>completed</option></select><button>Save batch</button></form><p id="batchResult" aria-live="polite"></p></section>
+<section><h2>Orders and tasks</h2><form id="orderForm"><label for="orderToken">Order tracking token</label><input id="orderToken" required><label for="orderStatus">Order status</label><select id="orderStatus"><option>received</option><option>scheduled</option><option>in_progress</option><option>completed</option><option>cancelled</option></select><button>Update order</button></form><p id="orderResult" aria-live="polite"></p>
+<form id="taskForm"><label for="taskId">Task ID to update (blank creates new)</label><input id="taskId" type="number" min="1"><label for="taskTitle">Task</label><input id="taskTitle" required maxlength="120"><label for="taskDue">Due date</label><input id="taskDue" type="date" required><label for="taskState">Task status</label><select id="taskState"><option>pending</option><option>completed</option></select><button>Save task</button></form><p id="taskResult" aria-live="polite"></p></section>
+<section><h2>Equipment and maintenance</h2><form id="equipmentForm"><label for="equipmentName">Equipment</label><input id="equipmentName" required maxlength="80"><label for="equipmentState">State</label><select id="equipmentState"><option>offline</option><option>mock_ready</option><option>maintenance</option></select><label for="maintenanceDue">Maintenance due</label><input id="maintenanceDue" type="date" required><button>Add equipment record</button></form><p id="equipmentResult" aria-live="polite"></p></section></div>
+<section><h2>Operations report</h2><p>Includes batch inventory, mass balance, order feedback, maintenance, tasks, assessment history and audit entries. Refresh after changing records.</p><pre id="overview">Load operations to begin.</pre></section>
+<div class="grid"><section><h2>Experimental inference</h2><form id="assessmentForm"><label for="modelId">Model</label><select id="modelId"><option>model_1_visual_cnn</option><option>model_2_ultrasound_3d</option><option>model_3_environment_rl</option><option>model_4_robotic_rl</option></select><label for="dataPath">Image/volume path relative to output/datasets</label><input id="dataPath"><label for="observation">RL observation JSON array (optional)</label><input id="observation" placeholder="[0.5,1,0,1,0,0,0]"><button>Run assessment</button></form><pre id="assessmentResult">No assessment requested.</pre></section>
+<section><h2>Mock safety controller</h2><p>No serial connection or physical movement. Arm explicitly, submit a task action, then test the emergency stop.</p><button id="arm">Arm mock</button> <button class="danger" id="stop">Emergency stop</button><label for="action">Task action</label><select id="action"><option value="0">Left one position</option><option value="1">Hold</option><option value="2">Right one position</option></select><label for="confidence">Synthetic perception confidence</label><input id="confidence" type="number" min="0" max="1" step="0.01" value="1"><button id="move">Submit action</button><pre id="controlResult">Stopped by default.</pre></section></div>
+</main><footer>CBSE Science Exhibition 2026–27 · Human review required</footer><script>
+const $=id=>document.getElementById(id);
+async function api(path,method='GET',body,token=''){
+ const headers={}; if(body!==undefined)headers['Content-Type']='application/json';
+ if(token)headers.Authorization='Bearer '+token;
+ const r=await fetch('/api'+path,{method,headers,body:body===undefined?undefined:JSON.stringify(body)});
+ const data=await r.json();if(!r.ok)throw new Error(typeof data.detail==='string'?data.detail:JSON.stringify(data.detail));return data;
+}
+function show(id,data){$(id).textContent=typeof data==='string'?data:JSON.stringify(data,null,2)}
+async function run(id,fn){try{show(id,'Working…');const result=await fn();show(id,result)}catch(e){show(id,e.message)}}
+
+const token=()=>$('token').value;
+$('refresh').onclick=()=>run('overview',()=>api('/manager/overview','GET',undefined,token()));
+$('report').onclick=()=>run('notice',async()=>{const r=await api('/manager/overview','GET',undefined,token());const u=URL.createObjectURL(new Blob([JSON.stringify(r,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=u;a.download='demonstration-report.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);return 'Report downloaded.'});
+$('batchForm').onsubmit=e=>{e.preventDefault();const id=$('batchId').value;run('batchResult',()=>api('/manager/batches'+(id?'/'+id:''),id?'PUT':'POST',{name:$('batchName').value,input_kg:Number($('inputMass').value),output_kg:Number($('outputMass').value),waste_kg:Number($('wasteMass').value),status:$('batchStatus').value},token()))};
+$('orderForm').onsubmit=e=>{e.preventDefault();run('orderResult',()=>api('/manager/orders/'+encodeURIComponent($('orderToken').value),'PATCH',{status:$('orderStatus').value},token()))};
+$('taskForm').onsubmit=e=>{e.preventDefault();const id=$('taskId').value;run('taskResult',()=>api('/manager/tasks'+(id?'/'+id:''),id?'PUT':'POST',{title:$('taskTitle').value,due:$('taskDue').value,status:$('taskState').value},token()))};
+$('equipmentForm').onsubmit=e=>{e.preventDefault();run('equipmentResult',()=>api('/manager/equipment','POST',{name:$('equipmentName').value,state:$('equipmentState').value,maintenance_due:$('maintenanceDue').value},token()))};
+$('assessmentForm').onsubmit=e=>{e.preventDefault();run('assessmentResult',()=>api('/manager/assess','POST',{model_id:$('modelId').value,relative_path:$('dataPath').value||null,observation:$('observation').value?JSON.parse($('observation').value):null},token()))};
+$('arm').onclick=()=>run('controlResult',()=>api('/manager/mock/arm','POST',{},token()));
+$('stop').onclick=()=>run('controlResult',()=>api('/manager/mock/stop','POST',{},token()));
+$('move').onclick=()=>run('controlResult',()=>api('/manager/mock/action','POST',{action:Number($('action').value),confidence:Number($('confidence').value)},token()));
+</script></body></html>

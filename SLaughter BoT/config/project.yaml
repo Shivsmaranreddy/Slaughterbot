@@ -1,0 +1,7 @@
+{
+  "name": "SLAUGHTER BOT",
+  "mode": "local_demo",
+  "database": "output/deployment/demo.db",
+  "host": "127.0.0.1",
+  "port": 8000
+}

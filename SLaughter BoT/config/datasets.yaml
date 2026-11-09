@@ -1,0 +1,5 @@
+{
+  "manifest": "output/datasets/manifest.example.json",
+  "allow_download": false,
+  "real_evaluation_requires_real_data": true
+}

@@ -1,0 +1,21 @@
+{
+  "name": "REPLACE_WITH_DATASET_NAME",
+  "source": "REPLACE_WITH_VERIFIED_SOURCE",
+  "license": "REVIEW_REQUIRED",
+  "citation": "REPLACE_WITH_CITATION",
+  "modality": "image",
+  "provenance": "real",
+  "permission_confirmed": false,
+  "collection_method": "Describe batch/subject acquisition",
+  "limitations": "Document sensor, class and population limitations",
+  "samples": [
+    {
+      "path": "relative/image.jpg",
+      "sha256": "REPLACE_WITH_SHA256",
+      "label": "visible_condition_label",
+      "group_id": "batch_001",
+      "split": "train",
+      "provenance": "real"
+    }
+  ]
+}
